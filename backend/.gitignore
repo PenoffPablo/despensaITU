@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+
+# IDEs (IntelliJ, Eclipse, VS Code, NetBeans)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.classpath
+.project
+.settings/
+.vscode/
+*.code-workspace
+.nb-gradle/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Lombok
+lombok.config

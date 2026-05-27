@@ -1,0 +1,120 @@
+/* ===== Google Fonts ===== */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+@import "tailwindcss";
+
+/* ===== Tailwind v4 Theme — Almacén & Despensa Rústica ===== */
+@theme {
+  --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+
+  /* Paleta Orgánica de Alimentos */
+  --color-sage-50: #f4f6f4;
+  --color-sage-100: #e2e8e2;
+  --color-sage-200: #c6d4c6;
+  --color-sage-300: #a2b8a2;
+  --color-sage-400: #7b997b;
+  --color-sage-500: #5a785a; /* Sage/Oliva Principal */
+  --color-sage-600: #465f46;
+  --color-sage-700: #384c38;
+  --color-sage-800: #2e3d2e;
+  --color-sage-900: #263326;
+
+  /* Tonos Trigo / Madera Cálida */
+  --color-amber-50: #fdfbf7;
+  --color-amber-100: #f7f3e9;
+  --color-amber-200: #eddcc5;
+  --color-amber-300: #e1be9c;
+  --color-amber-400: #d29b71;
+  --color-amber-500: #c37b4f; /* Terracota Cálido */
+  --color-amber-600: #b1603f;
+  --color-amber-700: #934a33;
+  --color-amber-800: #773c2c;
+  --color-amber-900: #623326;
+
+  /* Fondos y Textos Café/Cafetín */
+  --color-espresso-950: #1c130e;
+  --color-espresso-900: #2d1e17; /* Café muy oscuro */
+  --color-espresso-800: #3e2b20;
+  --color-espresso-700: #543b2d;
+  --color-espresso-600: #735443;
+  --color-espresso-500: #90715d;
+  --color-espresso-200: #dfd4cb;
+  --color-espresso-100: #ece5df;
+  --color-espresso-50: #f6f3f0;
+
+  /* Alertas */
+  --color-danger-400: #e07a5f;
+  --color-danger-500: #c94a29; /* Ladrillo / Terracota intenso */
+  --color-danger-600: #a3381d;
+
+  --color-success-400: #81b29a;
+  --color-success-500: #3d8060;
+}
+
+/* ===== Base Styles ===== */
+body {
+  background-color: var(--color-amber-50);
+  background-image: radial-gradient(var(--color-amber-100) 1px, transparent 1px);
+  background-size: 24px 24px;
+  min-height: 100vh;
+  color: var(--color-espresso-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Rústico & Moderno (Farmhouse) Utilities ===== */
+.farm-card {
+  background-color: #ffffff;
+  border: 1px solid var(--color-amber-200);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px -2px rgba(98, 51, 38, 0.05), 0 2px 6px -1px rgba(98, 51, 38, 0.03);
+}
+
+.farm-header {
+  background-color: var(--color-espresso-900);
+  border-bottom: 3px solid var(--color-amber-400);
+}
+
+/* ===== Custom scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-amber-50);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-amber-200);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-amber-300);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes pulse-warm {
+  0%, 100% { box-shadow: 0 0 0 0px rgba(195, 123, 79, 0.2); }
+  50% { box-shadow: 0 0 0 8px rgba(195, 123, 79, 0.4); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.animate-pulse-warm {
+  animation: pulse-warm 2.5s ease-in-out infinite;
+}
