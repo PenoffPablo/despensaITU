@@ -12,19 +12,33 @@ export default function AgregarModal({ abierto, onCerrar, onAgregar }) {
     e.preventDefault();
     setError('');
 
-    if (!nombre.trim()) {
+    const nombreNormalizado = nombre.trim().toUpperCase();
+
+    if (!nombreNormalizado) {
       setError('El nombre del alimento es obligatorio.');
       return;
     }
-    const stockNum = parseFloat(stock);
-    if (isNaN(stockNum) || stockNum <= 0) {
-      setError('El stock inicial debe ser un número positivo.');
+
+    if (/^\d+$/.test(nombreNormalizado)) {
+      setError('El nombre del alimento no puede consistir solo de números.');
+      return;
+    }
+
+    const stockTrimmed = stock.toString().trim();
+    if (!/^\d+(\.\d+)?$/.test(stockTrimmed)) {
+      setError('El stock inicial debe ser un número positivo (puede contener decimales, ej: 10.5).');
+      return;
+    }
+
+    const stockNum = parseFloat(stockTrimmed);
+    if (isNaN(stockNum) || stockNum < 0) {
+      setError('El stock inicial debe ser cero o positivo.');
       return;
     }
 
     setCargando(true);
     try {
-      await onAgregar(nombre.trim(), stockNum);
+      await onAgregar(nombreNormalizado, stockNum);
       setNombre('');
       setStock('');
       onCerrar();
@@ -103,7 +117,7 @@ export default function AgregarModal({ abierto, onCerrar, onAgregar }) {
               min="0"
               value={stock}
               onChange={(e) => setStock(e.target.value)}
-              placeholder="Ej: 10.0"
+              placeholder="Ej: 10.5"
               className="w-full px-4 py-3 rounded-xl bg-amber-50/50 border border-amber-200 text-espresso-900 placeholder-espresso-300 
                          focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200/50 
                          transition-all duration-200 font-medium"

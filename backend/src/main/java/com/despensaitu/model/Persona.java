@@ -20,9 +20,6 @@ public class Persona {
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "apellido")
-    private String apellido;
-
     @Column(name = "cedula")
     private String cedula;
 
@@ -33,8 +30,28 @@ public class Persona {
     private String correo;
 
     @Column(name = "usuario")
-    private String usuario;
+    private String usuario = null;
 
     @Column(name = "contrasenia")
-    private String contrasenia;
+    private String contrasenia = null;
+
+    /**
+     * Restablece la contraseña del usuario.
+     */
+    public void restablecerContrasenia() {
+        this.contrasenia = null;
+    }
+
+    /**
+     * Inicia sesión con las credenciales proporcionadas.
+     * @param credenciales arreglo con [usuario, contrasenia]
+     * @return true si las credenciales coinciden
+     */
+    public boolean iniciarSesion(String[] credenciales) {
+        if (credenciales == null || credenciales.length < 2) {
+            return false;
+        }
+        return credenciales[0].equals(this.usuario)
+                && credenciales[1].equals(this.contrasenia);
+    }
 }

@@ -12,6 +12,7 @@ import {
 } from './api/ingredientes';
 
 export default function App() {
+  const [despensaId, setDespensaId] = useState(1);
   const [ingredientes, setIngredientes] = useState([]);
   const [gerente, setGerente] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,8 +32,8 @@ export default function App() {
     setLoading(true);
     try {
       const [ings, ger] = await Promise.allSettled([
-        listarIngredientes(),
-        obtenerGerente(1),
+        listarIngredientes(despensaId),
+        obtenerGerente(despensaId),
       ]);
       if (ings.status === 'fulfilled') setIngredientes(ings.value);
       if (ger.status === 'fulfilled') setGerente(ger.value);
@@ -41,28 +42,28 @@ export default function App() {
     } finally {
       setLoading(false);
     }
-  }, [mostrarToast]);
+  }, [despensaId, mostrarToast]);
 
   useEffect(() => {
     cargarDatos();
   }, [cargarDatos]);
 
   const handleAgregar = async (nombre, stock) => {
-    await agregarIngrediente(nombre, stock);
+    await agregarIngrediente(despensaId, nombre, stock);
     mostrarToast(`"${nombre}" guardado en la despensa`);
     await cargarDatos();
   };
 
   const handleModificar = async (id, nuevoStock) => {
-    await actualizarStock(id, nuevoStock);
+    await actualizarStock(despensaId, id, nuevoStock);
     mostrarToast('Cantidad de stock actualizada');
     setSeleccionado(null);
     await cargarDatos();
   };
 
   const handleBorrar = async (id) => {
-    const nombre = seleccionado?.nombre;
-    await borrarIngrediente(id);
+    const nombre = seleccionado?.descripcion;
+    await borrarIngrediente(despensaId, id);
     mostrarToast(`"${nombre}" retirado de la despensa`);
     setSeleccionado(null);
     await cargarDatos();
@@ -84,9 +85,36 @@ export default function App() {
               </h1>
               {gerente && (
                 <p className="text-xs text-amber-200/80 mt-1 font-medium tracking-wider">
-                  Responsable: <span className="text-amber-300 font-semibold">{gerente.nombre} {gerente.apellido}</span>
+                  Responsable: <span className="text-amber-300 font-semibold">{gerente.nombre}</span>
                 </p>
               )}
+            </div>
+          </div>
+
+          {/* Selector de Despensa */}
+          <div className="flex items-center gap-3">
+            <label htmlFor="select-despensa" className="text-xs font-bold text-amber-200/60 uppercase tracking-widest font-serif">
+              Bodega
+            </label>
+            <div className="relative">
+              <select
+                id="select-despensa"
+                value={despensaId}
+                onChange={(e) => {
+                  setDespensaId(Number(e.target.value));
+                  setSeleccionado(null);
+                }}
+                className="pl-3 pr-8 py-2 rounded-xl bg-espresso-950/70 border border-amber-500/20 text-amber-100 text-sm font-semibold
+                           hover:border-amber-400/60 transition-all duration-200 cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-amber-400"
+              >
+                <option value={1} className="bg-espresso-900 text-amber-100 font-medium">Despensa Central (ID 1)</option>
+                <option value={2} className="bg-espresso-900 text-amber-100 font-medium">Despensa Norte (ID 2)</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-amber-400/80">
+                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                </svg>
+              </div>
             </div>
           </div>
 
@@ -144,8 +172,8 @@ export default function App() {
           <div className="mb-6 flex items-center gap-3 px-5 py-3 rounded-xl bg-amber-100 border border-amber-200 animate-fade-in shadow-sm">
             <div className="w-2.5 h-2.5 rounded-full bg-amber-600 animate-pulse" />
             <span className="text-sm text-espresso-800">
-              Alimento seleccionado: <span className="font-bold text-espresso-950 font-serif">{seleccionado.nombre}</span>
-              <span className="text-espresso-600"> — {seleccionado.cantidadStockKilos.toFixed(1)} kg en despensa</span>
+              Alimento seleccionado: <span className="font-bold text-espresso-950 font-serif">{seleccionado.descripcion}</span>
+              <span className="text-espresso-600"> — {seleccionado.cantidadStock.toFixed(1)} kg en despensa</span>
             </span>
             <button
               onClick={() => setSeleccionado(null)}

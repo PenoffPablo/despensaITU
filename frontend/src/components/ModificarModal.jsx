@@ -27,9 +27,15 @@ export default function ModificarModal({ abierto, onCerrar, onModificar, ingredi
       setError('Selecciona un alimento de la lista.');
       return;
     }
-    const stockNum = parseFloat(nuevoStock);
+    const stockTrimmed = nuevoStock.toString().trim();
+    if (!/^\d+(\.\d+)?$/.test(stockTrimmed)) {
+      setError('El stock debe ser un número positivo (puede contener decimales, ej: 15.5).');
+      return;
+    }
+
+    const stockNum = parseFloat(stockTrimmed);
     if (isNaN(stockNum) || stockNum < 0) {
-      setError('El nuevo stock debe ser un número válido (mayor o igual a 0).');
+      setError('El nuevo stock debe ser cero o positivo.');
       return;
     }
 
@@ -92,9 +98,9 @@ export default function ModificarModal({ abierto, onCerrar, onModificar, ingredi
                            transition-all duration-200 cursor-pointer font-medium appearance-none"
               >
                 <option value="" className="bg-white text-espresso-400">Seleccione un alimento...</option>
-                {ingredientes.map((ing) => (
+                 {ingredientes.map((ing) => (
                   <option key={ing.idIngrediente} value={ing.idIngrediente} className="bg-white text-espresso-900">
-                    {ing.nombre}
+                    {ing.descripcion}
                   </option>
                 ))}
               </select>
@@ -111,7 +117,7 @@ export default function ModificarModal({ abierto, onCerrar, onModificar, ingredi
             <div className="animate-fade-in">
               <label className="block text-sm font-bold text-espresso-700 mb-2 font-serif">Stock actual registrado</label>
               <div className="px-4 py-3 rounded-xl bg-amber-100/50 border border-amber-200 text-amber-700 font-bold">
-                {seleccionado.cantidadStockKilos.toFixed(1)} kg
+                {seleccionado.cantidadStock.toFixed(1)} kg
               </div>
             </div>
           )}
@@ -128,7 +134,7 @@ export default function ModificarModal({ abierto, onCerrar, onModificar, ingredi
               min="0"
               value={nuevoStock}
               onChange={(e) => setNuevoStock(e.target.value)}
-              placeholder="Ej: 15.3"
+              placeholder="Ej: 15.5"
               className="w-full px-4 py-3 rounded-xl bg-amber-50/50 border border-amber-200 text-espresso-900 placeholder-espresso-300 
                          focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200/50 
                          transition-all duration-200 font-medium"

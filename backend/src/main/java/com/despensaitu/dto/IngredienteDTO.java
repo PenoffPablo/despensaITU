@@ -5,7 +5,7 @@ package com.despensaitu.dto;
  */
 public record IngredienteDTO(
         Integer idIngrediente,
-        String nombre,
-        Double cantidadStockKilos
+        double cantidadStock,
+        String descripcion
 ) {
 }

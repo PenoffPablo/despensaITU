@@ -70,27 +70,27 @@ export default function IngredienteTable({ ingredientes, loading, onSeleccionar,
                       {/* Estado visual orgánico del stock */}
                       <div className={`
                         w-3 h-3 rounded-full transition-all duration-300
-                        ${ing.cantidadStockKilos > 20
+                        ${ing.cantidadStock > 20
                           ? 'bg-success-500 shadow-sm' // Alto stock (verde)
-                          : ing.cantidadStockKilos > 5
+                          : ing.cantidadStock > 5
                             ? 'bg-amber-500 shadow-sm' // Stock medio (naranja/amarillo)
                             : 'bg-danger-500 shadow-sm animate-pulse' // Stock crítico (rojo ladrillo)
                         }
                       `} />
-                      <span className="font-semibold text-espresso-900 font-serif">{ing.nombre}</span>
+                      <span className="font-semibold text-espresso-900 font-serif">{ing.descripcion}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <span className={`
                       inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold
-                      ${ing.cantidadStockKilos > 20
+                      ${ing.cantidadStock > 20
                         ? 'bg-success-500/10 text-success-500'
-                        : ing.cantidadStockKilos > 5
+                        : ing.cantidadStock > 5
                           ? 'bg-amber-500/10 text-amber-600'
                           : 'bg-danger-500/10 text-danger-500'
                       }
                     `}>
-                      {ing.cantidadStockKilos.toFixed(1)} kg
+                      {ing.cantidadStock.toFixed(1)} kg
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
@@ -109,7 +109,7 @@ export default function IngredienteTable({ ingredientes, loading, onSeleccionar,
           {ingredientes.length} alimento{ingredientes.length !== 1 ? 's' : ''} registrado{ingredientes.length !== 1 ? 's' : ''}
         </span>
         <span className="text-sm font-bold font-serif text-espresso-800">
-          Carga total en despensa: <span className="text-amber-700">{ingredientes.reduce((sum, i) => sum + i.cantidadStockKilos, 0).toFixed(1)} kg</span>
+          Carga total en despensa: <span className="text-amber-700">{ingredientes.reduce((sum, i) => sum + i.cantidadStock, 0).toFixed(1)} kg</span>
         </span>
       </div>
     </div>

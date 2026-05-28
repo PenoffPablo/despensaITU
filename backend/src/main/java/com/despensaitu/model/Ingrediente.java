@@ -16,9 +16,6 @@ public class Ingrediente {
     @Column(name = "id_ingrediente")
     private Integer idIngrediente;
 
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
-
-    @Column(name = "cantidad_stock_kilos", nullable = false)
-    private Double cantidadStockKilos;
+    @Column(name = "descripcion", nullable = false)
+    private String descripcion;
 }

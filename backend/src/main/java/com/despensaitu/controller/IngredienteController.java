@@ -20,31 +20,39 @@ public class IngredienteController {
     private final IngredienteService ingredienteService;
 
     @GetMapping
-    public ResponseEntity<List<IngredienteDTO>> listarTodos() {
-        return ResponseEntity.ok(ingredienteService.listarTodos());
+    public ResponseEntity<List<IngredienteDTO>> listarTodos(
+            @RequestParam(required = false, defaultValue = "1") Integer despensaId) {
+        return ResponseEntity.ok(ingredienteService.listarTodos(despensaId));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<IngredienteDTO> obtenerPorId(@PathVariable Integer id) {
-        return ResponseEntity.ok(ingredienteService.obtenerPorId(id));
+    public ResponseEntity<IngredienteDTO> obtenerPorId(
+            @PathVariable Integer id,
+            @RequestParam(required = false, defaultValue = "1") Integer despensaId) {
+        return ResponseEntity.ok(ingredienteService.obtenerPorId(id, despensaId));
     }
 
     @PostMapping
-    public ResponseEntity<IngredienteDTO> agregar(@Valid @RequestBody CrearIngredienteRequest request) {
-        IngredienteDTO creado = ingredienteService.agregar(request);
+    public ResponseEntity<IngredienteDTO> agregar(
+            @RequestParam(required = false, defaultValue = "1") Integer despensaId,
+            @Valid @RequestBody CrearIngredienteRequest request) {
+        IngredienteDTO creado = ingredienteService.agregar(despensaId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<IngredienteDTO> actualizarStock(
             @PathVariable Integer id,
+            @RequestParam(required = false, defaultValue = "1") Integer despensaId,
             @Valid @RequestBody ActualizarStockRequest request) {
-        return ResponseEntity.ok(ingredienteService.actualizarStock(id, request));
+        return ResponseEntity.ok(ingredienteService.actualizarStock(id, despensaId, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> borrar(@PathVariable Integer id) {
-        ingredienteService.borrar(id);
+    public ResponseEntity<Void> borrar(
+            @PathVariable Integer id,
+            @RequestParam(required = false, defaultValue = "1") Integer despensaId) {
+        ingredienteService.borrar(id, despensaId);
         return ResponseEntity.noContent().build();
     }
 }

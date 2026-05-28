@@ -26,8 +26,7 @@ public class DespensaService {
 
         return new GerenteDTO(
                 gerente.getIdGerente(),
-                gerente.getNombre(),
-                gerente.getApellido()
+                gerente.getNombre()
         );
     }
 }

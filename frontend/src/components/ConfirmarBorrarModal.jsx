@@ -44,7 +44,7 @@ export default function ConfirmarBorrarModal({ abierto, ingrediente, onCerrar, o
         <div className="text-center mb-8">
           <h2 className="text-xl font-bold text-espresso-900 font-serif mb-2">¿Quitar alimento?</h2>
           <p className="text-espresso-600 text-sm leading-relaxed">
-            Estás a punto de retirar <span className="text-espresso-900 font-bold font-serif">{ingrediente.nombre}</span> de la despensa.
+            Estás a punto de retirar <span className="text-espresso-900 font-bold font-serif">{ingrediente.descripcion}</span> de la despensa.
             <br />Esta acción no se puede deshacer.
           </p>
         </div>

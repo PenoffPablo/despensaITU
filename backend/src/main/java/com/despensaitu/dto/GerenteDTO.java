@@ -5,7 +5,6 @@ package com.despensaitu.dto;
  */
 public record GerenteDTO(
         Integer idGerente,
-        String nombre,
-        String apellido
+        String nombre
 ) {
 }

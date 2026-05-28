@@ -3,6 +3,9 @@ package com.despensaitu.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "despensa")
 @Getter
@@ -16,10 +19,9 @@ public class Despensa {
     @Column(name = "id_despensa")
     private Integer idDespensa;
 
-    @Column(name = "id_gerente", insertable = false, updatable = false)
-    private Integer idGerenteFK;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_gerente", referencedColumnName = "id_gerente")
+    @OneToOne(mappedBy = "despensa", fetch = FetchType.LAZY)
     private Gerente gerente;
+
+    @OneToMany(mappedBy = "despensa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DespensaIngrediente> despensaIngredientes = new ArrayList<>();
 }

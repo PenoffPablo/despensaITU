@@ -7,6 +7,6 @@ import jakarta.validation.constraints.PositiveOrZero;
  */
 public record ActualizarStockRequest(
         @PositiveOrZero(message = "El stock debe ser cero o positivo")
-        Double cantidadStockKilos
+        double cantidadStock
 ) {
 }
