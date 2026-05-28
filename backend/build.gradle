@@ -33,3 +33,42 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// -----------------------------------------------------------------------------
+// Integración del Frontend (React/Vite) con el Backend (Spring Boot)
+// -----------------------------------------------------------------------------
+def frontendDir = "$projectDir/../frontend"
+
+task installFrontend(type: Exec) {
+	workingDir frontendDir
+	inputs.file "$frontendDir/package.json"
+	outputs.dir "$frontendDir/node_modules"
+	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+		commandLine 'cmd', '/c', 'npm install'
+	} else {
+		commandLine 'sh', '-c', 'npm install'
+	}
+}
+
+task buildFrontend(type: Exec) {
+	dependsOn installFrontend
+	workingDir frontendDir
+	inputs.dir "$frontendDir/src"
+	inputs.file "$frontendDir/vite.config.js"
+	outputs.dir "$frontendDir/dist"
+	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+		commandLine 'cmd', '/c', 'npm run build'
+	} else {
+		commandLine 'sh', '-c', 'npm run build'
+	}
+}
+
+task copyFrontendResources(type: Copy) {
+	dependsOn buildFrontend
+	from "$frontendDir/dist"
+	into "$buildDir/resources/main/static"
+}
+
+processResources {
+	dependsOn copyFrontendResources
+}

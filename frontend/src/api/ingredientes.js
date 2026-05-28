@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8080/api';
+const API_BASE = '/api';
 
 export async function listarIngredientes(despensaId = 1) {
   const res = await fetch(`${API_BASE}/ingredientes?despensaId=${despensaId}`);
