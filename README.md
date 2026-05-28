@@ -2,6 +2,11 @@
 
 Este proyecto representa la migración completa y modernización del software original `IntegradorV2`. Se ha reemplazado el monolito de escritorio desarrollado en Java Swing con conexión JDBC manual por una arquitectura web moderna desacoplada en dos capas: un backend REST API con Spring Boot y un cliente web con React.
 
+El sistema fue basado en el siguiente UML:
+
+<img width="1336" height="842" alt="UML Despensa" src="https://github.com/user-attachments/assets/230877b6-e3a5-4d69-a9c5-4fa2d2716e58" />
+
+
 El proyecto está diseñado bajo una arquitectura de tres capas en el backend y un diseño de componentes modular en el frontend, utilizando bases de datos en memoria para facilitar su ejecución y prueba inmediata.
 
 ---
