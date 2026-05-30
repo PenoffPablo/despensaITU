@@ -35,7 +35,10 @@ export default function App() {
         listarIngredientes(despensaId),
         obtenerGerente(despensaId),
       ]);
-      if (ings.status === 'fulfilled') setIngredientes(ings.value);
+      if (ings.status === 'fulfilled') {
+        // El backend ahora devuelve un Page de Spring, así que los datos están en 'content'
+        setIngredientes(ings.value.content || ings.value || []);
+      }
       if (ger.status === 'fulfilled') setGerente(ger.value);
     } catch {
       mostrarToast('Error al cargar datos de la despensa', 'error');
@@ -72,7 +75,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-amber-50">
       <header className="farm-header sticky top-0 z-40 shadow-lg">
-        <div className="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-5 flex flex-col md:flex-row items-center justify-between gap-5 md:gap-4">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-amber-500 flex items-center justify-center shadow-md animate-pulse-warm">
               <svg className="w-6 h-6 text-espresso-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -92,7 +95,7 @@ export default function App() {
           </div>
 
           {/* Selector de Despensa */}
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 w-full md:w-auto">
             <label htmlFor="select-despensa" className="text-xs font-bold text-amber-200/60 uppercase tracking-widest font-serif">
               Bodega
             </label>
@@ -104,7 +107,7 @@ export default function App() {
                   setDespensaId(Number(e.target.value));
                   setSeleccionado(null);
                 }}
-                className="pl-3 pr-8 py-2 rounded-xl bg-espresso-950/70 border border-amber-500/20 text-amber-100 text-sm font-semibold
+                className="w-full sm:w-auto pl-3 pr-8 py-2 rounded-xl bg-espresso-950/70 border border-amber-500/20 text-amber-100 text-sm font-semibold
                            hover:border-amber-400/60 transition-all duration-200 cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-amber-400"
               >
                 <option value={1} className="bg-espresso-900 text-amber-100 font-medium">Despensa Central (ID 1)</option>
@@ -118,7 +121,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 w-full md:w-auto">
             <button
               onClick={() => setModalAgregar(true)}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sage-500 text-white text-sm font-semibold
@@ -167,9 +170,9 @@ export default function App() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-5xl w-full mx-auto px-6 py-8">
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {seleccionado && (
-          <div className="mb-6 flex items-center gap-3 px-5 py-3 rounded-xl bg-amber-100 border border-amber-200 animate-fade-in shadow-sm">
+          <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-3 px-5 py-3 rounded-xl bg-amber-100 border border-amber-200 animate-fade-in shadow-sm">
             <div className="w-2.5 h-2.5 rounded-full bg-amber-600 animate-pulse" />
             <span className="text-sm text-espresso-800">
               Alimento seleccionado: <span className="font-bold text-espresso-950 font-serif">{seleccionado.descripcion}</span>
@@ -177,15 +180,15 @@ export default function App() {
             </span>
             <button
               onClick={() => setSeleccionado(null)}
-              className="ml-auto text-xs font-semibold text-amber-700 hover:text-amber-900 underline transition-colors cursor-pointer"
+              className="mt-2 sm:mt-0 sm:ml-auto text-xs font-semibold text-amber-700 hover:text-amber-900 underline transition-colors cursor-pointer"
             >
               Limpiar selección
             </button>
           </div>
         )}
 
-        <div className="farm-card p-6 bg-white">
-          <h2 className="text-xl font-bold text-espresso-900 font-serif mb-4 flex items-center gap-2">
+        <div className="farm-card p-4 sm:p-6 bg-white">
+          <h2 className="text-lg sm:text-xl font-bold text-espresso-900 font-serif mb-4 flex items-center gap-2">
             <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
             </svg>
@@ -201,7 +204,7 @@ export default function App() {
       </main>
 
       <footer className="border-t border-amber-200 bg-amber-100/50 py-6 mt-12">
-        <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <p className="text-xs text-espresso-500 font-medium">
             despensaITU — Sistema de Gestión de Alimentos y Bodega
           </p>

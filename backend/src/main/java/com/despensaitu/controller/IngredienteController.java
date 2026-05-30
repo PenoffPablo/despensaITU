@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 import java.util.List;
 
@@ -20,9 +23,10 @@ public class IngredienteController {
     private final IngredienteService ingredienteService;
 
     @GetMapping
-    public ResponseEntity<List<IngredienteDTO>> listarTodos(
-            @RequestParam(required = false, defaultValue = "1") Integer despensaId) {
-        return ResponseEntity.ok(ingredienteService.listarTodos(despensaId));
+    public ResponseEntity<Page<IngredienteDTO>> listarTodos(
+            @RequestParam(required = false, defaultValue = "1") Integer despensaId,
+            @PageableDefault(size = 10, page = 0) Pageable pageable) {
+        return ResponseEntity.ok(ingredienteService.listarTodos(despensaId, pageable));
     }
 
     @GetMapping("/{id}")
