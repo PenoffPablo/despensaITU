@@ -61,7 +61,7 @@ export default function ModificarModal({ abierto, onCerrar, onModificar, ingredi
 
       {/* Modal */}
       <div
-        className="relative bg-white border border-amber-200 rounded-3xl p-8 w-full max-w-md animate-slide-up shadow-2xl"
+        className="relative bg-white border border-amber-200 rounded-3xl p-5 sm:p-8 w-full max-w-md animate-slide-up shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

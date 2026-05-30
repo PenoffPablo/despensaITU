@@ -13,6 +13,8 @@ import com.despensaitu.repository.IngredienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -25,11 +27,9 @@ public class IngredienteService {
     private final DespensaRepository despensaRepository;
 
     @Transactional(readOnly = true)
-    public List<IngredienteDTO> listarTodos(Integer despensaId) {
-        return despensaIngredienteRepository.findByIdIdDespensa(despensaId)
-                .stream()
-                .map(this::toDTO)
-                .toList();
+    public Page<IngredienteDTO> listarTodos(Integer despensaId, Pageable pageable) {
+        return despensaIngredienteRepository.findByIdIdDespensa(despensaId, pageable)
+                .map(this::toDTO);
     }
 
     @Transactional(readOnly = true)
